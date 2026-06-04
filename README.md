@@ -15,7 +15,7 @@
 
 ## Table of contents
 
-- [Model reference](#model-reference)
+- [Model reference](#model-reference) → [MODEL.md](MODEL.md)
 - [Features](#features)
 - [Requirements](#requirements)
 - [Installation](#installation)
@@ -34,9 +34,9 @@
 
 ## Model reference
 
-For TI mismatch presets (gain, offset, timing skew), mux timing, spur locations at `k·fs/M`, phase milestones, and parity tolerances, see **[PLAN.md](PLAN.md)**.
+For signal-chain equations, mux sampling, per-channel mismatch, INL/DNL and FFT methods, spur locations at `k·fs/M`, and multi-engine behavior, see **[MODEL.md](MODEL.md)**.
 
-Per-channel ADC behavior (noise, jitter, nonlinearity, DNL spread) follows **adc-model** — see [adc-model/MODEL.md](https://github.com/SJTU-YONGFU-RESEARCH-GRP/adc-model/blob/main/MODEL.md) and `veriloga/configurable_adc.va`.
+Phase milestones and parity exit criteria: **[PLAN.md](PLAN.md)**. Per-channel ADC noise and quantization follow **adc-model** — [model/adc-model/MODEL.md](model/adc-model/MODEL.md).
 
 ## Features
 
@@ -377,7 +377,8 @@ With default `Fin ≈ 121.7 MHz` and `fs/M = 250 MHz`, impaired dynamic runs sho
 Further engine notes:
 
 - [testbench/spectre/README.md](testbench/spectre/README.md) — Cadence Spectre and Verilog-A
-- [PLAN.md](PLAN.md) — roadmap, mismatch model, Phase 1 exit criteria
+- [MODEL.md](MODEL.md) — TI mux, mismatch, testbenches, engines
+- [PLAN.md](PLAN.md) — roadmap and Phase 1 exit criteria
 
 ## Project layout
 
@@ -385,6 +386,7 @@ Further engine notes:
 ti-adc-model/
 ├── LICENSE
 ├── README.md
+├── MODEL.md
 ├── PLAN.md
 ├── pyproject.toml
 ├── scripts/
