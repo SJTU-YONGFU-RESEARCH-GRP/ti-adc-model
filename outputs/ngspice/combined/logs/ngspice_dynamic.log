@@ -1,5 +1,5 @@
 # TI ngspice simulation log: ti_dynamic_spectrum.cir
-Generated: 2026-06-04 09:40:57 UTC
+Generated: 2026-06-04 10:58:50 UTC
 Engine: ngspice behavioral TI array (reference: ti_channel_adc.va)
 Repo root: /home/yongfu/proj/ti-adc-model
 Netlist: /home/yongfu/proj/ti-adc-model/outputs/ngspice/combined/logs/netlists/ti_dynamic_spectrum.cir
@@ -19,19 +19,19 @@ Initial Transient Solution
 
 Node                                   Voltage
 ----                                   -------
-vin                                        0.5
+vin                                   0.500057
 clk0                                      0.75
-v_gain0                                  0.485
-v_nl0                                    0.485
+v_gain0                               0.485056
+v_nl0                                 0.485056
 clk1                                         0
-v_gain1                                  0.495
-v_nl1                                    0.495
+v_gain1                               0.495057
+v_nl1                                 0.495057
 clk2                                         0
-v_gain2                                  0.505
-v_nl2                                    0.505
+v_gain2                               0.505057
+v_nl2                                 0.505057
 clk3                                         0
-v_gain3                                  0.515
-v_nl3                                    0.515
+v_gain3                               0.515058
+v_nl3                                 0.515058
 bnonlin3#branch                              0
 bgain3#branch                                0
 bnonlin2#branch                              0
@@ -46,6 +46,6 @@ vclk1#branch                                 0
 vclk0#branch                                 0
 vin#branch                                   0
 
- Reference value :  4.07143e-07 Reference value :  8.35573e-07 Reference value :  1.26107e-06 Reference value :  1.65048e-06 Reference value :  1.99608e-06 Reference value :  2.40128e-06 Reference value :  2.78981e-06 Reference value :  3.16581e-06 Reference value :  3.53997e-06 Reference value :  3.90804e-06 Reference value :  4.26000e-06 Reference value :  4.61344e-06 Reference value :  4.96004e-06 Reference value :  5.29699e-06 Reference value :  5.62612e-06 Reference value :  5.95821e-06 Reference value :  6.27803e-06 Reference value :  6.60002e-06 Reference value :  6.90757e-06 Reference value :  7.21602e-06 Reference value :  7.51714e-06 Reference value :  7.81703e-06 Reference value :  8.10961e-06
+ Reference value :  2.56982e-07 Reference value :  5.59000e-07 Reference value :  8.43270e-07 Reference value :  1.13802e-06 Reference value :  1.42413e-06 Reference value :  1.70101e-06 Reference value :  1.97402e-06 Reference value :  2.24214e-06 Reference value :  2.50907e-06 Reference value :  2.77305e-06 Reference value :  3.02309e-06 Reference value :  3.26500e-06 Reference value :  3.51612e-06 Reference value :  3.76427e-06 Reference value :  4.00909e-06 Reference value :  4.24914e-06 Reference value :  4.48737e-06 Reference value :  4.72414e-06 Reference value :  4.95744e-06 Reference value :  5.18802e-06 Reference value :  5.41117e-06 Reference value :  5.63725e-06 Reference value :  5.84822e-06 Reference value :  6.06929e-06 Reference value :  6.28714e-06 Reference value :  6.50518e-06 Reference value :  6.72098e-06 Reference value :  6.93318e-06 Reference value :  7.14117e-06 Reference value :  7.34101e-06 Reference value :  7.51314e-06 Reference value :  7.69013e-06 Reference value :  7.87308e-06 Reference value :  8.07907e-06
 No. of Data Rows : 180211
 Note: Simulation executed from .control section 

@@ -325,6 +325,59 @@ def build_ti_dynamic_mux_from_vin(
     return _mux_waveform_dict(mux_time, vin_mux, cfg, codes)
 
 
+def _quantize_ngspice_vnl_at_mux_grid(
+    waveform: dict[str, NDArray[np.float64]],
+    cfg: TiAdcConfig,
+    *,
+    num_samples: int,
+    profile: MismatchProfile,
+    noise: AdcNoiseConfig,
+) -> tuple[NDArray[np.float64], NDArray[np.float64], NDArray[np.int64]]:
+    """Quantize ngspice ``v_nl{k}`` at Python mux instants (SPICE analog, aligned timing)."""
+    time_dense = waveform["time"]
+    mux_time, vin_mux = _resample_vin_to_mux_grid(
+        time_dense,
+        waveform["vin"],
+        cfg,
+        num_samples,
+    )
+    adc_cfg = cfg.effective_adc_config()
+    codes = np.zeros(num_samples, dtype=np.int64)
+    rng = np.random.default_rng(noise.noise_seed)
+    dnl_profile = (
+        build_dnl_profile(adc_cfg, noise) if noise.dnl_sigma_lsb > 0.0 else None
+    )
+
+    for n in range(num_samples):
+        k = n % cfg.num_channels
+        mismatch = effective_mismatch(cfg, profile, n, k)
+        skew = float(mismatch.timing_skew_s)
+        if cfg.enable_cal:
+            skew -= float(cfg.timing_cal_s[k])
+        t_target = n / cfg.fs_hz + skew
+        idx = int(np.argmin(np.abs(time_dense - t_target)))
+        v_nl = float(waveform[f"v_nl{k}"][idx])
+
+        if noise.sigma_thermal_v > 0.0 or dnl_profile is not None:
+            v_front = np.array([v_nl], dtype=np.float64)
+            if noise.sigma_thermal_v > 0.0:
+                v_front += rng.normal(0.0, noise.sigma_thermal_v, size=1)
+            if dnl_profile is not None:
+                code_idx = int(
+                    np.clip(
+                        np.floor((v_front[0] - cfg.vrefn) / cfg.lsb),
+                        0,
+                        cfg.max_code - 1,
+                    )
+                )
+                v_front[0] += dnl_profile[code_idx]
+            codes[n] = int(quantize_front_end(v_front, adc_cfg)[0])
+        else:
+            codes[n] = int(quantize_front_end(np.array([v_nl], dtype=np.float64), adc_cfg)[0])
+
+    return mux_time, vin_mux, codes
+
+
 def build_ti_static_mux_from_ngspice(
     waveform: dict[str, NDArray[np.float64]],
     cfg: TiAdcConfig,
@@ -333,22 +386,33 @@ def build_ti_static_mux_from_ngspice(
     profile: MismatchProfile | None = None,
     noise: AdcNoiseConfig | None = None,
 ) -> dict[str, NDArray[np.float64]]:
-    """Mux per-channel ngspice ``v_code`` onto the skew-aware ``n/fs`` grid."""
+    """Mux ngspice static capture (``v_code*`` or ``v_nl*``) onto the mux grid."""
     mismatch_profile = profile or preset_static_profile()
     noise_cfg = noise or AdcNoiseConfig()
-    _finalize_ti_ngspice_channels(waveform, cfg, noise_cfg)
-    mux_time, vin_mux = _resample_vin_to_mux_grid(
-        waveform["time"],
-        waveform["vin"],
-        cfg,
-        num_samples,
-    )
-    codes_at_instants = _va_codes_at_mux_grid(
+
+    if "v_code0" in waveform:
+        mux_time, vin_mux = _resample_vin_to_mux_grid(
+            waveform["time"],
+            waveform["vin"],
+            cfg,
+            num_samples,
+        )
+        codes_at_instants = _va_codes_at_mux_grid(
+            waveform,
+            cfg,
+            num_samples=num_samples,
+            profile=mismatch_profile,
+            edge_offset=_NGSPICE_V_CODE_EDGE_OFFSET,
+        )
+        codes = _ti_static_sample_hold(codes_at_instants)
+        return _mux_waveform_dict(mux_time, vin_mux, cfg, codes)
+
+    mux_time, vin_mux, codes_at_instants = _quantize_ngspice_vnl_at_mux_grid(
         waveform,
         cfg,
         num_samples=num_samples,
         profile=mismatch_profile,
-        edge_offset=_NGSPICE_V_CODE_EDGE_OFFSET,
+        noise=noise_cfg,
     )
     codes = _ti_static_sample_hold(codes_at_instants)
     return _mux_waveform_dict(mux_time, vin_mux, cfg, codes)
@@ -362,22 +426,15 @@ def build_ti_dynamic_mux_from_ngspice(
     profile: MismatchProfile | None = None,
     noise: AdcNoiseConfig | None = None,
 ) -> dict[str, NDArray[np.float64]]:
-    """Mux per-channel ngspice ``v_code`` onto the skew-aware ``n/fs`` grid."""
+    """Mux ngspice channel ``v_nl`` at Python dynamic instants."""
     mismatch_profile = profile or preset_static_profile()
     noise_cfg = noise or AdcNoiseConfig()
-    _finalize_ti_ngspice_channels(waveform, cfg, noise_cfg)
-    mux_time, vin_mux = _resample_vin_to_mux_grid(
-        waveform["time"],
-        waveform["vin"],
-        cfg,
-        num_samples,
-    )
-    codes = _va_codes_at_mux_grid(
+    mux_time, vin_mux, codes = _quantize_ngspice_vnl_at_mux_grid(
         waveform,
         cfg,
         num_samples=num_samples,
         profile=mismatch_profile,
-        edge_offset=_NGSPICE_V_CODE_EDGE_OFFSET,
+        noise=noise_cfg,
     )
     return _mux_waveform_dict(mux_time, vin_mux, cfg, codes)
 
@@ -470,17 +527,21 @@ def prepare_ti_ngspice_waveform(
 ) -> dict[str, NDArray[np.float64]]:
     """Prepare muxed TI waveforms from ngspice ``wrdata``.
 
-    Default (``golden_export=False``): each channel is simulated in ngspice and
-    muxed from per-channel ``v_code*`` / ``v_nl*`` probes (engine-independent E2E).
+    Quantizer-limited (ideal): mux from ngspice ``v_nl`` / ``v_code`` (independent E2E).
 
-    With ``golden_export=True``, resamples ``vin`` on the Python mux grid (Tier-1).
+    With noise enabled: full ``jitter → gain → nonlinearity → thermal → DNL`` on the
+    captured ``vin`` transient at Python mux instants (matches Python / Spectre order;
+    SPICE channel chains still run for analog validation in ``wrdata``).
+
+    ``golden_export=True`` forces the vin path even when ideal.
     """
     mismatch_profile = profile or preset_static_profile()
     noise_cfg = noise or AdcNoiseConfig()
+    use_vin_mux = golden_export or noise_cfg.enabled
 
     if static_capture:
         num_samples = max_samples if max_samples is not None else cfg.num_codes * 4
-        if golden_export:
+        if use_vin_mux:
             return build_ti_static_mux_from_vin(
                 waveform,
                 cfg,
@@ -500,7 +561,7 @@ def prepare_ti_ngspice_waveform(
         msg = "Dynamic ngspice export requires max_samples."
         raise ValueError(msg)
 
-    if golden_export:
+    if use_vin_mux:
         return build_ti_dynamic_mux_from_vin(
             waveform,
             cfg,

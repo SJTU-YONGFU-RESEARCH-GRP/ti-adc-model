@@ -1,5 +1,5 @@
 # TI ngspice simulation log: ti_static_inl_dnl.cir
-Generated: 2026-06-04 09:13:02 UTC
+Generated: 2026-06-04 10:57:32 UTC
 Engine: ngspice behavioral TI array (reference: ti_channel_adc.va)
 Repo root: /home/yongfu/proj/ti-adc-model
 Netlist: /home/yongfu/proj/ti-adc-model/outputs/ngspice/clock/logs/netlists/ti_static_inl_dnl.cir
@@ -8,7 +8,7 @@ Command: ngspice -b /home/yongfu/proj/ti-adc-model/outputs/ngspice/clock/logs/ne
 Note: No compatibility mode selected!
 
 
-Circuit: * ti static inl/dnl testbench (ngspice behavioral, python mux post-process)
+Circuit: * ti static inl/dnl testbench (ngspice behavioral, channel-wise e2e + ti mux)
 
 Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
 
@@ -19,19 +19,19 @@ Initial Transient Solution
 
 Node                                   Voltage
 ----                                   -------
-vin                                0.000488759
+vin                                0.000488769
 clk0                                         1
-v_gain0                            0.000488759
-v_nl0                              0.000239491
+v_gain0                            0.000488769
+v_nl0                              0.000239502
 clk1                                         0
-v_gain1                            0.000488759
-v_nl1                              0.000239491
+v_gain1                            0.000488769
+v_nl1                              0.000239502
 clk2                                         0
-v_gain2                            0.000488759
-v_nl2                              0.000239491
+v_gain2                            0.000488769
+v_nl2                              0.000239502
 clk3                                         0
-v_gain3                            0.000488759
-v_nl3                              0.000239491
+v_gain3                            0.000488769
+v_nl3                              0.000239502
 bnonlin3#branch                              0
 bgain3#branch                                0
 bnonlin2#branch                              0
@@ -46,6 +46,6 @@ vclk1#branch                                 0
 vclk0#branch                                 0
 vin#branch                                   0
 
- Reference value :  3.65200e-07 Reference value :  7.81254e-07 Reference value :  1.19000e-06 Reference value :  1.57913e-06 Reference value :  1.96214e-06 Reference value :  2.33814e-06 Reference value :  2.70614e-06 Reference value :  3.05369e-06 Reference value :  3.40825e-06 Reference value :  3.74621e-06 Reference value :  4.07900e-06 Reference value :  4.40433e-06 Reference value :  4.72531e-06 Reference value :  5.04210e-06 Reference value :  5.35523e-06 Reference value :  5.64134e-06 Reference value :  5.94516e-06 Reference value :  6.24393e-06 Reference value :  6.54108e-06 Reference value :  6.83112e-06 Reference value :  7.11873e-06 Reference value :  7.40108e-06 Reference value :  7.68001e-06 Reference value :  7.94724e-06 Reference value :  8.21904e-06 Reference value :  8.48370e-06 Reference value :  8.74721e-06 Reference value :  9.00600e-06 Reference value :  9.26722e-06 Reference value :  9.51996e-06 Reference value :  9.75201e-06 Reference value :  9.99700e-06 Reference value :  1.02411e-05 Reference value :  1.04780e-05 Reference value :  1.07130e-05 Reference value :  1.09487e-05 Reference value :  1.11795e-05 Reference value :  1.14090e-05 Reference value :  1.16380e-05 Reference value :  1.18661e-05 Reference value :  1.20960e-05 Reference value :  1.23212e-05 Reference value :  1.25444e-05 Reference value :  1.27639e-05 Reference value :  1.29500e-05 Reference value :  1.31547e-05 Reference value :  1.33790e-05 Reference value :  1.35982e-05 Reference value :  1.38170e-05 Reference value :  1.39870e-05 Reference value :  1.41932e-05 Reference value :  1.44051e-05 Reference value :  1.46174e-05 Reference value :  1.48290e-05 Reference value :  1.50374e-05 Reference value :  1.52432e-05 Reference value :  1.54480e-05 Reference value :  1.56282e-05 Reference value :  1.58352e-05 Reference value :  1.60364e-05 Reference value :  1.62391e-05
+ Reference value :  2.09035e-07 Reference value :  4.95135e-07 Reference value :  7.72091e-07 Reference value :  1.04727e-06 Reference value :  1.32423e-06 Reference value :  1.58314e-06 Reference value :  1.83403e-06 Reference value :  2.07196e-06 Reference value :  2.31117e-06 Reference value :  2.54025e-06 Reference value :  2.78317e-06 Reference value :  3.01601e-06 Reference value :  3.25414e-06 Reference value :  3.49127e-06 Reference value :  3.72539e-06 Reference value :  3.96097e-06 Reference value :  4.18617e-06 Reference value :  4.41135e-06 Reference value :  4.63701e-06 Reference value :  4.84211e-06 Reference value :  5.05950e-06 Reference value :  5.27000e-06 Reference value :  5.47707e-06 Reference value :  5.66900e-06 Reference value :  5.87602e-06 Reference value :  6.08009e-06 Reference value :  6.28214e-06 Reference value :  6.48719e-06 Reference value :  6.67616e-06 Reference value :  6.87509e-06 Reference value :  7.07202e-06 Reference value :  7.27299e-06 Reference value :  7.46930e-06 Reference value :  7.66497e-06 Reference value :  7.85593e-06 Reference value :  8.04390e-06 Reference value :  8.22866e-06 Reference value :  8.41508e-06 Reference value :  8.58497e-06 Reference value :  8.76714e-06 Reference value :  8.94969e-06 Reference value :  9.13015e-06 Reference value :  9.30727e-06 Reference value :  9.48405e-06 Reference value :  9.66311e-06 Reference value :  9.83814e-06 Reference value :  1.00121e-05 Reference value :  1.01863e-05 Reference value :  1.03460e-05 Reference value :  1.05191e-05 Reference value :  1.06871e-05 Reference value :  1.08563e-05 Reference value :  1.10221e-05 Reference value :  1.11891e-05 Reference value :  1.13530e-05 Reference value :  1.15172e-05 Reference value :  1.16791e-05 Reference value :  1.18290e-05 Reference value :  1.19882e-05 Reference value :  1.21462e-05 Reference value :  1.23050e-05 Reference value :  1.24631e-05 Reference value :  1.26207e-05 Reference value :  1.27781e-05 Reference value :  1.29333e-05 Reference value :  1.30877e-05 Reference value :  1.32421e-05 Reference value :  1.33823e-05 Reference value :  1.35332e-05 Reference value :  1.36831e-05 Reference value :  1.38332e-05 Reference value :  1.39830e-05 Reference value :  1.41331e-05 Reference value :  1.42815e-05 Reference value :  1.44301e-05 Reference value :  1.45762e-05 Reference value :  1.47111e-05 Reference value :  1.48570e-05 Reference value :  1.50027e-05 Reference value :  1.51460e-05 Reference value :  1.52890e-05 Reference value :  1.54332e-05 Reference value :  1.55772e-05 Reference value :  1.57221e-05 Reference value :  1.58667e-05 Reference value :  1.60081e-05 Reference value :  1.61510e-05 Reference value :  1.62920e-05
 No. of Data Rows : 385008
 Note: Simulation executed from .control section 

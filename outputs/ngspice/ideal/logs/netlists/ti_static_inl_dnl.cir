@@ -1,4 +1,4 @@
-* TI static INL/DNL testbench (ngspice behavioral, Python mux post-process)
+* TI static INL/DNL testbench (ngspice behavioral, channel-wise E2E + TI mux)
 * Reference: veriloga/ti_channel_adc.va + ti_adc Python golden model
 .param BITS=10
 .param VREFP=1.0
@@ -4122,19 +4122,23 @@ Vin vin 0 PWL(
 Vclk0 clk0 0 PULSE(0 1 0.000000000000e+00 100p 100p 2.000000000000e-09 4.000000000000e-09)
 Bgain0 v_gain0 0 V={ 1.000000000000e+00*V(vin)+0.000000000000e+00 }
 Bnonlin0 v_nl0 0 V={ V(v_gain0) + VFS*(NONLINEARITY_A2*pow((V(v_gain0)-VCM)/VFS,2) + NONLINEARITY_A3*pow((V(v_gain0)-VCM)/VFS,3)) }
+Bquant0 v_code0 0 V={ ( V(v_nl0) <= VREFN ? 0 : V(v_nl0) >= VREFP ? MAXCODE : floor((V(v_nl0)-VREFN)/LSB+0.5) ) * LSB }
 Vclk1 clk1 0 PULSE(0 1 1.000000000000e-09 100p 100p 2.000000000000e-09 4.000000000000e-09)
 Bgain1 v_gain1 0 V={ 1.000000000000e+00*V(vin)+0.000000000000e+00 }
 Bnonlin1 v_nl1 0 V={ V(v_gain1) + VFS*(NONLINEARITY_A2*pow((V(v_gain1)-VCM)/VFS,2) + NONLINEARITY_A3*pow((V(v_gain1)-VCM)/VFS,3)) }
+Bquant1 v_code1 0 V={ ( V(v_nl1) <= VREFN ? 0 : V(v_nl1) >= VREFP ? MAXCODE : floor((V(v_nl1)-VREFN)/LSB+0.5) ) * LSB }
 Vclk2 clk2 0 PULSE(0 1 2.000000000000e-09 100p 100p 2.000000000000e-09 4.000000000000e-09)
 Bgain2 v_gain2 0 V={ 1.000000000000e+00*V(vin)+0.000000000000e+00 }
 Bnonlin2 v_nl2 0 V={ V(v_gain2) + VFS*(NONLINEARITY_A2*pow((V(v_gain2)-VCM)/VFS,2) + NONLINEARITY_A3*pow((V(v_gain2)-VCM)/VFS,3)) }
+Bquant2 v_code2 0 V={ ( V(v_nl2) <= VREFN ? 0 : V(v_nl2) >= VREFP ? MAXCODE : floor((V(v_nl2)-VREFN)/LSB+0.5) ) * LSB }
 Vclk3 clk3 0 PULSE(0 1 3.000000000000e-09 100p 100p 2.000000000000e-09 4.000000000000e-09)
 Bgain3 v_gain3 0 V={ 1.000000000000e+00*V(vin)+0.000000000000e+00 }
 Bnonlin3 v_nl3 0 V={ V(v_gain3) + VFS*(NONLINEARITY_A2*pow((V(v_gain3)-VCM)/VFS,2) + NONLINEARITY_A3*pow((V(v_gain3)-VCM)/VFS,3)) }
+Bquant3 v_code3 0 V={ ( V(v_nl3) <= VREFN ? 0 : V(v_nl3) >= VREFP ? MAXCODE : floor((V(v_nl3)-VREFN)/LSB+0.5) ) * LSB }
 
 .control
 tran 1.000000000000e-09 4.096000000000e-06
 set wr_singlescale
-wrdata /home/yongfu/proj/ti-adc-model/outputs/ngspice/ideal/logs/ti_static_inl_dnl.wrdata v(vin) v(clk0) v(v_nl0) v(clk1) v(v_nl1) v(clk2) v(v_nl2) v(clk3) v(v_nl3)
+wrdata /home/yongfu/proj/ti-adc-model/outputs/ngspice/ideal/logs/ti_static_inl_dnl.wrdata v(vin) v(clk0) v(v_code0) v(clk1) v(v_code1) v(clk2) v(v_code2) v(clk3) v(v_code3)
 .endc
 .end

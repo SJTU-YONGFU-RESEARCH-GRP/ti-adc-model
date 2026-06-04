@@ -1,4 +1,4 @@
-* TI dynamic spectrum testbench (ngspice behavioral, Python mux post-process)
+* TI dynamic spectrum testbench (ngspice behavioral, channel-wise E2E + TI mux)
 * Reference: veriloga/ti_channel_adc.va + ti_adc Python golden model
 .param BITS=10
 .param VREFP=1.0

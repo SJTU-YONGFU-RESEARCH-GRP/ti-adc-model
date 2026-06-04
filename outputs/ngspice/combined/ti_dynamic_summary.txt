@@ -1,7 +1,7 @@
-SNDR     : 25.68 dB
-SFDR     : 30.39 dB
-ENOB     : 3.97 bits
-THD      : 71.52 dB
+SNDR     : 25.45 dB
+SFDR     : 30.27 dB
+ENOB     : 3.93 bits
+THD      : 76.77 dB
 Fin      : 121.704102 MHz
 Channel Fs (fs/M): 250.000000 MHz
 TI mismatch spurs:

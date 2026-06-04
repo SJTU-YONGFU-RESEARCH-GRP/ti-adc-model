@@ -1,5 +1,5 @@
 # TI ngspice simulation log: ti_static_inl_dnl.cir
-Generated: 2026-06-04 09:12:13 UTC
+Generated: 2026-06-04 10:55:52 UTC
 Engine: ngspice behavioral TI array (reference: ti_channel_adc.va)
 Repo root: /home/yongfu/proj/ti-adc-model
 Netlist: /home/yongfu/proj/ti-adc-model/outputs/ngspice/ideal/logs/netlists/ti_static_inl_dnl.cir
@@ -8,7 +8,7 @@ Command: ngspice -b /home/yongfu/proj/ti-adc-model/outputs/ngspice/ideal/logs/ne
 Note: No compatibility mode selected!
 
 
-Circuit: * ti static inl/dnl testbench (ngspice behavioral, python mux post-process)
+Circuit: * ti static inl/dnl testbench (ngspice behavioral, channel-wise e2e + ti mux)
 
 Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
 
@@ -23,21 +23,29 @@ vin                                0.000488759
 clk0                                         0
 v_gain0                            0.000488759
 v_nl0                              0.000488759
+v_code0                            0.000977517
 clk1                                         0
 v_gain1                            0.000488759
 v_nl1                              0.000488759
+v_code1                            0.000977517
 clk2                                         0
 v_gain2                            0.000488759
 v_nl2                              0.000488759
+v_code2                            0.000977517
 clk3                                         0
 v_gain3                            0.000488759
 v_nl3                              0.000488759
+v_code3                            0.000977517
+bquant3#branch                               0
 bnonlin3#branch                              0
 bgain3#branch                                0
+bquant2#branch                               0
 bnonlin2#branch                              0
 bgain2#branch                                0
+bquant1#branch                               0
 bnonlin1#branch                              0
 bgain1#branch                                0
+bquant0#branch                               0
 bnonlin0#branch                              0
 bgain0#branch                                0
 vclk3#branch                                 0
@@ -46,6 +54,6 @@ vclk1#branch                                 0
 vclk0#branch                                 0
 vin#branch                                   0
 
- Reference value :  6.59121e-07 Reference value :  1.33320e-06 Reference value :  1.97678e-06 Reference value :  2.59522e-06 Reference value :  3.18110e-06 Reference value :  3.72911e-06
+ Reference value :  3.10374e-07 Reference value :  6.80121e-07 Reference value :  1.04722e-06 Reference value :  1.42011e-06 Reference value :  1.78721e-06 Reference value :  2.15255e-06 Reference value :  2.51411e-06 Reference value :  2.86510e-06 Reference value :  3.20510e-06 Reference value :  3.54255e-06 Reference value :  3.84524e-06
 No. of Data Rows : 65533
 Note: Simulation executed from .control section 

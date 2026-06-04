@@ -52,6 +52,20 @@ def test_render_ti_static_netlist_stops_before_quantize_when_noisy() -> None:
     assert "v(v_nl0)" in text
 
 
+def test_render_ti_dynamic_netlist_stops_before_quantize() -> None:
+    """Dynamic netlists always export ``v_nl`` for Python edge finalize."""
+    cfg = preset_ideal(num_channels=4, fs_hz=DEFAULT_FS_HZ)
+    noise = AdcNoiseConfig()
+    text = render_ti_dynamic_netlist(
+        cfg,
+        noise,
+        num_samples=128,
+        fin_hz=100_000.0,
+    )
+    assert "Bquant0" not in text
+    assert "v(v_nl0)" in text
+
+
 def test_render_ti_dynamic_netlist_uses_inline_pwl() -> None:
     """Dynamic TI netlists should include a coherent inline PWL stimulus."""
     cfg = preset_ideal(num_channels=4, fs_hz=1.0e6)

@@ -1,5 +1,5 @@
 # TI ngspice simulation log: ti_dynamic_spectrum.cir
-Generated: 2026-06-04 09:13:21 UTC
+Generated: 2026-06-04 10:58:04 UTC
 Engine: ngspice behavioral TI array (reference: ti_channel_adc.va)
 Repo root: /home/yongfu/proj/ti-adc-model
 Netlist: /home/yongfu/proj/ti-adc-model/outputs/ngspice/clock/logs/netlists/ti_dynamic_spectrum.cir
@@ -8,7 +8,7 @@ Command: ngspice -b /home/yongfu/proj/ti-adc-model/outputs/ngspice/clock/logs/ne
 Note: No compatibility mode selected!
 
 
-Circuit: * ti dynamic spectrum testbench (ngspice behavioral, python mux post-process)
+Circuit: * ti dynamic spectrum testbench (ngspice behavioral, channel-wise e2e + ti mux)
 
 Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
 
@@ -19,19 +19,19 @@ Initial Transient Solution
 
 Node                                   Voltage
 ----                                   -------
-vin                                        0.5
+vin                                   0.500057
 clk0                                         1
-v_gain0                                    0.5
-v_nl0                                      0.5
+v_gain0                               0.500057
+v_nl0                                 0.500057
 clk1                                         0
-v_gain1                                    0.5
-v_nl1                                      0.5
+v_gain1                               0.500057
+v_nl1                                 0.500057
 clk2                                         0
-v_gain2                                    0.5
-v_nl2                                      0.5
+v_gain2                               0.500057
+v_nl2                                 0.500057
 clk3                                         0
-v_gain3                                    0.5
-v_nl3                                      0.5
+v_gain3                               0.500057
+v_nl3                                 0.500057
 bnonlin3#branch                              0
 bgain3#branch                                0
 bnonlin2#branch                              0
@@ -46,6 +46,6 @@ vclk1#branch                                 0
 vclk0#branch                                 0
 vin#branch                                   0
 
- Reference value :  3.91102e-07 Reference value :  8.19070e-07 Reference value :  1.23443e-06 Reference value :  1.63666e-06 Reference value :  2.02024e-06 Reference value :  2.39917e-06 Reference value :  2.77739e-06 Reference value :  3.13702e-06 Reference value :  3.48814e-06 Reference value :  3.83550e-06 Reference value :  4.17911e-06 Reference value :  4.51803e-06 Reference value :  4.83950e-06 Reference value :  5.08925e-06 Reference value :  5.41002e-06 Reference value :  5.68701e-06 Reference value :  5.99205e-06 Reference value :  6.28310e-06 Reference value :  6.53309e-06 Reference value :  6.83108e-06 Reference value :  7.12109e-06 Reference value :  7.40520e-06 Reference value :  7.68531e-06 Reference value :  7.94718e-06
+ Reference value :  2.43077e-07 Reference value :  5.00159e-07 Reference value :  7.55167e-07 Reference value :  1.00414e-06 Reference value :  1.24823e-06 Reference value :  1.48211e-06 Reference value :  1.74391e-06 Reference value :  2.00390e-06 Reference value :  2.26108e-06 Reference value :  2.51322e-06 Reference value :  2.76211e-06 Reference value :  2.99321e-06 Reference value :  3.23697e-06 Reference value :  3.47513e-06 Reference value :  3.71028e-06 Reference value :  3.93302e-06 Reference value :  4.15900e-06 Reference value :  4.37769e-06 Reference value :  4.59814e-06 Reference value :  4.81501e-06 Reference value :  5.03110e-06 Reference value :  5.23666e-06 Reference value :  5.44801e-06 Reference value :  5.65707e-06 Reference value :  5.85120e-06 Reference value :  6.05730e-06 Reference value :  6.25700e-06 Reference value :  6.46112e-06 Reference value :  6.66413e-06 Reference value :  6.86350e-06 Reference value :  7.05913e-06 Reference value :  7.25410e-06 Reference value :  7.44614e-06 Reference value :  7.62214e-06 Reference value :  7.78122e-06 Reference value :  7.93828e-06 Reference value :  8.09120e-06
 No. of Data Rows : 192496
 Note: Simulation executed from .control section 

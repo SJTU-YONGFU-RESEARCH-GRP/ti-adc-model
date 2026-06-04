@@ -67,13 +67,19 @@ def _ti_global_param_block(cfg: TiAdcConfig, noise: AdcNoiseConfig) -> str:
 """.strip()
 
 
-def _render_ti_channel_instances(cfg: TiAdcConfig, noise: AdcNoiseConfig) -> str:
+def _render_ti_channel_instances(
+    cfg: TiAdcConfig,
+    noise: AdcNoiseConfig,
+    *,
+    static_capture: bool,
+) -> str:
     """Return per-channel gain/nonlinearity B-sources, clocks, and optional quantizers."""
     m = cfg.num_channels
     fs = cfg.fs_hz
     period = m / fs
     width = 0.5 * period
-    stop_before_quantize = _needs_python_post_process(noise)
+    # Dynamic: always stop before quantize (Python mux grid). Static ideal may use SPICE quantizer.
+    stop_before_quantize = _needs_python_post_process(noise) or not static_capture
     lines: list[str] = []
 
     for k in range(m):
@@ -105,9 +111,14 @@ def _render_ti_channel_instances(cfg: TiAdcConfig, noise: AdcNoiseConfig) -> str
     return "\n".join(lines)
 
 
-def _wrdata_signal_list(cfg: TiAdcConfig, noise: AdcNoiseConfig) -> str:
+def _wrdata_signal_list(
+    cfg: TiAdcConfig,
+    noise: AdcNoiseConfig,
+    *,
+    static_capture: bool,
+) -> str:
     """Return ngspice ``wrdata`` probe list for a TI capture."""
-    stop_before_quantize = _needs_python_post_process(noise)
+    stop_before_quantize = _needs_python_post_process(noise) or not static_capture
     probes = ["v(vin)"]
     for k in range(cfg.num_channels):
         probes.append(f"v(clk{k})")
@@ -121,6 +132,7 @@ def read_ti_ngspice_wrdata(
     *,
     num_channels: int,
     noise: AdcNoiseConfig | None = None,
+    static_capture: bool = True,
 ) -> dict[str, NDArray[np.float64]]:
     """Read a multi-channel TI ngspice ``wrdata`` file.
 
@@ -133,7 +145,8 @@ def read_ti_ngspice_wrdata(
         Waveform dictionary with ``time``, ``vin``, ``clk{k}``, and channel analog probes.
     """
     noise_cfg = noise or AdcNoiseConfig()
-    analog_prefix = "v_nl" if _needs_python_post_process(noise_cfg) else "v_code"
+    stop_before_quantize = _needs_python_post_process(noise_cfg) or not static_capture
+    analog_prefix = "v_nl" if stop_before_quantize else "v_code"
     table = np.loadtxt(path)
     if table.ndim == 1:
         table = table.reshape(1, -1)
@@ -182,8 +195,8 @@ def render_ti_static_netlist(
     ramp_end = cfg.vrefp - margin
     time = np.arange(num_samples, dtype=np.float64) * dt
     vin = np.linspace(ramp_start, ramp_end, num_samples)
-    rng = np.random.default_rng(noise.noise_seed)
-    if not _needs_python_post_process(noise):
+    if noise.jitter_rms_s > 0.0:
+        rng = np.random.default_rng(noise.noise_seed)
         vin = _apply_input_jitter(vin, dt, noise, rng)
     pwl_source = _render_pwl_source(time, vin)
 
@@ -198,12 +211,12 @@ def render_ti_static_netlist(
 
 .options delmax={dt:.12e} maxstep={dt:.12e}
 {pwl_source}
-{_render_ti_channel_instances(cfg, noise)}
+{_render_ti_channel_instances(cfg, noise, static_capture=True)}
 
 .control
 tran {dt:.12e} {t_stop:.12e}
 set wr_singlescale
-wrdata $wrdata {_wrdata_signal_list(cfg, noise)}
+wrdata $wrdata {_wrdata_signal_list(cfg, noise, static_capture=True)}
 .endc
 .end
 """.strip()
@@ -224,8 +237,8 @@ def render_ti_dynamic_netlist(
     mid = 0.5 * (cfg.vrefp + cfg.vrefn)
     time = np.arange(num_samples, dtype=np.float64) * dt
     vin = mid + amplitude * np.sin(2.0 * np.pi * fin_hz * time)
-    rng = np.random.default_rng(noise.noise_seed)
-    if not _needs_python_post_process(noise):
+    if noise.jitter_rms_s > 0.0:
+        rng = np.random.default_rng(noise.noise_seed)
         vin = _apply_input_jitter(vin, dt, noise, rng)
     pwl_source = _render_pwl_source(time, vin)
 
@@ -240,12 +253,12 @@ def render_ti_dynamic_netlist(
 
 .options delmax={dt:.12e} maxstep={dt:.12e}
 {pwl_source}
-{_render_ti_channel_instances(cfg, noise)}
+{_render_ti_channel_instances(cfg, noise, static_capture=False)}
 
 .control
 tran {dt:.12e} {t_stop:.12e}
 set wr_singlescale
-wrdata $wrdata {_wrdata_signal_list(cfg, noise)}
+wrdata $wrdata {_wrdata_signal_list(cfg, noise, static_capture=False)}
 .endc
 .end
 """.strip()
@@ -344,6 +357,7 @@ def run_ti_ngspice_testbench(
         wrdata_path,
         num_channels=cfg.num_channels,
         noise=noise,
+        static_capture=static_capture,
     )
     muxed = prepare_ti_ngspice_waveform(
         raw_waveform,

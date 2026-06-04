@@ -1,5 +1,5 @@
 # TI ngspice simulation log: ti_static_inl_dnl.cir
-Generated: 2026-06-04 09:39:13 UTC
+Generated: 2026-06-04 10:58:20 UTC
 Engine: ngspice behavioral TI array (reference: ti_channel_adc.va)
 Repo root: /home/yongfu/proj/ti-adc-model
 Netlist: /home/yongfu/proj/ti-adc-model/outputs/ngspice/combined/logs/netlists/ti_static_inl_dnl.cir
@@ -19,19 +19,19 @@ Initial Transient Solution
 
 Node                                   Voltage
 ----                                   -------
-vin                                0.000488759
+vin                                0.000488769
 clk0                                      0.75
-v_gain0                            -0.00701857
-v_nl0                              -0.00727925
+v_gain0                            -0.00701856
+v_nl0                              -0.00727924
 clk1                                         0
-v_gain1                            -0.00201369
-v_nl1                              -0.00226672
+v_gain1                            -0.00201367
+v_nl1                              -0.00226671
 clk2                                         0
-v_gain2                              0.0029912
-v_nl2                               0.00274566
+v_gain2                             0.00299121
+v_nl2                               0.00274567
 clk3                                         0
-v_gain3                             0.00799609
-v_nl3                               0.00775789
+v_gain3                              0.0079961
+v_nl3                                0.0077579
 bnonlin3#branch                              0
 bgain3#branch                                0
 bnonlin2#branch                              0
@@ -46,6 +46,6 @@ vclk1#branch                                 0
 vclk0#branch                                 0
 vin#branch                                   0
 
- Reference value :  2.37195e-07 Reference value :  5.49614e-07 Reference value :  8.49075e-07 Reference value :  1.14708e-06 Reference value :  1.44097e-06 Reference value :  1.72403e-06 Reference value :  2.00648e-06 Reference value :  2.28507e-06 Reference value :  2.56099e-06 Reference value :  2.83213e-06 Reference value :  3.09102e-06 Reference value :  3.35224e-06 Reference value :  3.60936e-06 Reference value :  3.86327e-06 Reference value :  4.11509e-06 Reference value :  4.36216e-06 Reference value :  4.60757e-06 Reference value :  4.85100e-06 Reference value :  5.09105e-06 Reference value :  5.32823e-06 Reference value :  5.56302e-06 Reference value :  5.79514e-06 Reference value :  6.01008e-06 Reference value :  6.23718e-06 Reference value :  6.46128e-06 Reference value :  6.68400e-06 Reference value :  6.90416e-06 Reference value :  7.12213e-06 Reference value :  7.33848e-06 Reference value :  7.54508e-06 Reference value :  7.75616e-06 Reference value :  7.96500e-06 Reference value :  8.17307e-06 Reference value :  8.37927e-06 Reference value :  8.58230e-06 Reference value :  8.78403e-06 Reference value :  8.98202e-06 Reference value :  9.17907e-06 Reference value :  9.37612e-06 Reference value :  9.57208e-06 Reference value :  9.76719e-06 Reference value :  9.96099e-06 Reference value :  1.01523e-05 Reference value :  1.03432e-05 Reference value :  1.05319e-05 Reference value :  1.07191e-05 Reference value :  1.09052e-05 Reference value :  1.10900e-05 Reference value :  1.12733e-05 Reference value :  1.14561e-05 Reference value :  1.16371e-05 Reference value :  1.18174e-05 Reference value :  1.19966e-05 Reference value :  1.21740e-05 Reference value :  1.23510e-05 Reference value :  1.25251e-05 Reference value :  1.26992e-05 Reference value :  1.28721e-05 Reference value :  1.30440e-05 Reference value :  1.32154e-05 Reference value :  1.33850e-05 Reference value :  1.35531e-05 Reference value :  1.37194e-05 Reference value :  1.38853e-05 Reference value :  1.40520e-05 Reference value :  1.42170e-05 Reference value :  1.43802e-05 Reference value :  1.45440e-05 Reference value :  1.47067e-05 Reference value :  1.48690e-05 Reference value :  1.50292e-05 Reference value :  1.51900e-05 Reference value :  1.53493e-05 Reference value :  1.55090e-05 Reference value :  1.56661e-05 Reference value :  1.58241e-05 Reference value :  1.59802e-05 Reference value :  1.61360e-05 Reference value :  1.62905e-05
+ Reference value :  2.30739e-07 Reference value :  5.35143e-07 Reference value :  8.32316e-07 Reference value :  1.12505e-06 Reference value :  1.39900e-06 Reference value :  1.68118e-06 Reference value :  1.95736e-06 Reference value :  2.23117e-06 Reference value :  2.49907e-06 Reference value :  2.76022e-06 Reference value :  3.01109e-06 Reference value :  3.26717e-06 Reference value :  3.51731e-06 Reference value :  3.76602e-06 Reference value :  3.99813e-06 Reference value :  4.23995e-06 Reference value :  4.48221e-06 Reference value :  4.71729e-06 Reference value :  4.95623e-06 Reference value :  5.18717e-06 Reference value :  5.41728e-06 Reference value :  5.64528e-06 Reference value :  5.87102e-06 Reference value :  6.07802e-06 Reference value :  6.29814e-06 Reference value :  6.51814e-06 Reference value :  6.72016e-06 Reference value :  6.93421e-06 Reference value :  7.14501e-06 Reference value :  7.35402e-06 Reference value :  7.56000e-06 Reference value :  7.76013e-06 Reference value :  7.95708e-06 Reference value :  8.15600e-06 Reference value :  8.34601e-06 Reference value :  8.53907e-06 Reference value :  8.73318e-06 Reference value :  8.92757e-06 Reference value :  9.11830e-06 Reference value :  9.30919e-06 Reference value :  9.49727e-06 Reference value :  9.68023e-06 Reference value :  9.86511e-06 Reference value :  1.00500e-05 Reference value :  1.02340e-05 Reference value :  1.04171e-05 Reference value :  1.05974e-05 Reference value :  1.07773e-05 Reference value :  1.09553e-05 Reference value :  1.11330e-05 Reference value :  1.13092e-05 Reference value :  1.14800e-05 Reference value :  1.16551e-05 Reference value :  1.18293e-05 Reference value :  1.20021e-05 Reference value :  1.21731e-05 Reference value :  1.23400e-05 Reference value :  1.25063e-05 Reference value :  1.26742e-05 Reference value :  1.28440e-05 Reference value :  1.30092e-05 Reference value :  1.31691e-05 Reference value :  1.33293e-05 Reference value :  1.34942e-05 Reference value :  1.36559e-05 Reference value :  1.38170e-05 Reference value :  1.39781e-05 Reference value :  1.41370e-05 Reference value :  1.42960e-05 Reference value :  1.44541e-05 Reference value :  1.46126e-05 Reference value :  1.47680e-05 Reference value :  1.49162e-05 Reference value :  1.50660e-05 Reference value :  1.52199e-05 Reference value :  1.53631e-05 Reference value :  1.55043e-05 Reference value :  1.56533e-05 Reference value :  1.58020e-05 Reference value :  1.59530e-05 Reference value :  1.61040e-05 Reference value :  1.62530e-05
 No. of Data Rows : 360435
 Note: Simulation executed from .control section 

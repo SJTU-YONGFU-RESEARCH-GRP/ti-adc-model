@@ -21,7 +21,11 @@ from ti_adc.cli_helpers import (
 ENGINES = ("python", "spectre", "ngspice")
 
 # PLAN.md Phase 1.4 tolerances (Python reference vs independent simulators).
-DEFAULT_SNDR_TOLERANCE_DB = 2.0
+IDEAL_SNDR_TOLERANCE_DB = 0.5
+IMPAIRED_SNDR_TOLERANCE_DB = 2.0
+DEFAULT_SNDR_TOLERANCE_DB = IMPAIRED_SNDR_TOLERANCE_DB
+IDEAL_THD_TOLERANCE_DB = 1.5
+IMPAIRED_THD_TOLERANCE_DB = 3.0
 DEFAULT_DNL_TOLERANCE_LSB = 0.05
 DEFAULT_INL_TOLERANCE_LSB = 0.15
 IMPAIRED_DNL_TOLERANCE_LSB = 1.5
@@ -64,6 +68,11 @@ def _parse_args() -> argparse.Namespace:
         help="Also compare static max |DNL| and |INL| when CSVs exist.",
     )
     parser.add_argument(
+        "--check-thd",
+        action="store_true",
+        help="Also compare dynamic THD when checking parity.",
+    )
+    parser.add_argument(
         "--sndr-tolerance-db",
         type=float,
         default=DEFAULT_SNDR_TOLERANCE_DB,
@@ -94,6 +103,20 @@ def _static_tolerances(case: str, args: argparse.Namespace) -> tuple[float, floa
     return args.dnl_tolerance_lsb, args.inl_tolerance_lsb
 
 
+def _sndr_tolerance_db(case: str, args: argparse.Namespace) -> float:
+    """Return SNDR tolerance for a case (ideal uses PLAN 0.5 dB target)."""
+    if case in IMPAIRED_CASES:
+        return max(args.sndr_tolerance_db, IMPAIRED_SNDR_TOLERANCE_DB)
+    return min(args.sndr_tolerance_db, IDEAL_SNDR_TOLERANCE_DB)
+
+
+def _thd_tolerance_db(case: str) -> float:
+    """Return THD tolerance for a case."""
+    if case in IMPAIRED_CASES:
+        return IMPAIRED_THD_TOLERANCE_DB
+    return IDEAL_THD_TOLERANCE_DB
+
+
 def main() -> int:
     args = _parse_args()
     cfg = build_ti_adc_config(args)
@@ -101,10 +124,13 @@ def main() -> int:
     fin_hz = args.coherent_bin * cfg.fs_hz / args.num_samples
 
     print(f"Case: {args.case}  Fin: {fin_hz/1e6:.4f} MHz  fs: {cfg.fs_hz/1e9:.3g} GHz")
-    print(f"{'Engine':<10} {'SNDR (dB)':>10} {'ENOB':>8} {'Max|DNL|':>10} {'Max|INL|':>10}")
-    print("-" * 52)
+    print(
+        f"{'Engine':<10} {'SNDR (dB)':>10} {'THD (dB)':>10} {'ENOB':>8} "
+        f"{'Max|DNL|':>10} {'Max|INL|':>10}"
+    )
+    print("-" * 62)
 
-    metrics: dict[str, tuple[float, float, float]] = {}
+    metrics: dict[str, tuple[float, float, float, float]] = {}
     for engine in args.engines:
         case_dir = args.output_root / engine / args.case
         dyn_csv = case_dir / "ti_dynamic_waveform.csv"
@@ -125,14 +151,22 @@ def main() -> int:
             )
             max_dnl = lin.max_dnl_lsb
             max_inl = lin.max_inl_lsb
-        metrics[engine] = (report.metrics.sndr_db, max_dnl, max_inl)
+        metrics[engine] = (
+            report.metrics.sndr_db,
+            report.metrics.thd_db,
+            max_dnl,
+            max_inl,
+        )
         print(
             f"{engine:<10} {report.metrics.sndr_db:10.2f} "
-            f"{report.metrics.enob_bits:8.2f} {max_dnl:10.4f} {max_inl:10.4f}"
+            f"{report.metrics.thd_db:10.2f} {report.metrics.enob_bits:8.2f} "
+            f"{max_dnl:10.4f} {max_inl:10.4f}"
         )
 
     if not args.check_parity:
         return 0
+
+    check_thd = args.check_thd or args.check_parity
 
     if "python" not in metrics:
         print("parity check: need python reference outputs", file=sys.stderr)
@@ -144,20 +178,29 @@ def main() -> int:
         print("parity check: need at least one non-python engine", file=sys.stderr)
         return 1
 
-    py_sndr, py_dnl, py_inl = metrics["python"]
+    py_sndr, py_thd, py_dnl, py_inl = metrics["python"]
     failed: list[str] = []
     dnl_tol, inl_tol = _static_tolerances(args.case, args)
+    sndr_tol = _sndr_tolerance_db(args.case, args)
+    thd_tol = _thd_tolerance_db(args.case)
 
     for engine in compare_engines:
         if engine not in metrics:
             print(f"parity check: missing {engine} outputs", file=sys.stderr)
             return 1
-        eng_sndr, eng_dnl, eng_inl = metrics[engine]
+        eng_sndr, eng_thd, eng_dnl, eng_inl = metrics[engine]
         sndr_delta = abs(eng_sndr - py_sndr)
-        if sndr_delta > args.sndr_tolerance_db:
+        if sndr_delta > sndr_tol:
             failed.append(
-                f"{engine} SNDR delta {sndr_delta:.2f} dB > {args.sndr_tolerance_db:.2f} dB"
+                f"{engine} SNDR delta {sndr_delta:.2f} dB > {sndr_tol:.2f} dB"
             )
+
+        if check_thd and math.isfinite(py_thd) and math.isfinite(eng_thd):
+            thd_delta = abs(eng_thd - py_thd)
+            if thd_delta > thd_tol:
+                failed.append(
+                    f"{engine} THD delta {thd_delta:.2f} dB > {thd_tol:.2f} dB"
+                )
 
         if args.check_static and math.isfinite(py_dnl) and math.isfinite(eng_dnl):
             dnl_delta = abs(eng_dnl - py_dnl)
@@ -184,11 +227,11 @@ def main() -> int:
         sndr_delta = abs(eng_sndr - py_sndr)
         print(
             f"PARITY PASS: {compare_engines[0]} SNDR delta {sndr_delta:.2f} dB "
-            f"(limit {args.sndr_tolerance_db:.2f} dB)"
+            f"(limit {sndr_tol:.2f} dB)"
         )
     else:
         print(
-            f"PARITY PASS: all engines within {args.sndr_tolerance_db:.2f} dB SNDR "
+            f"PARITY PASS: all engines within {sndr_tol:.2f} dB SNDR "
             f"of {reference_engine}"
         )
     return 0
