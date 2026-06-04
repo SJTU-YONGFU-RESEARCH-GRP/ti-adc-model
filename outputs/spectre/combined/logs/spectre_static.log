@@ -1,0 +1,246 @@
+# TI Spectre simulation log: ti_static_inl_dnl.scs
+Generated: 2026-06-04 09:38:10 UTC
+Spectre run directory: /home/yongfu/proj/ti-adc-model/outputs/spectre/combined/logs
+Command: spectre /home/yongfu/proj/ti-adc-model/outputs/spectre/combined/logs/netlists/ti_static_inl_dnl.scs -format nutascii -raw /home/yongfu/proj/ti-adc-model/outputs/spectre/combined/logs/ti_static_inl_dnl.nutascii
+Raw output: /home/yongfu/proj/ti-adc-model/outputs/spectre/combined/logs/ti_static_inl_dnl.nutascii
+
+Spectre (R) Circuit Simulator
+Version 24.1.0.167.isr2 64bit -- 28 Nov 2024
+Copyright (C) 1989-2024 Cadence Design Systems, Inc. All rights reserved
+        worldwide. Cadence and Spectre are registered trademarks of Cadence
+        Design Systems, Inc. All others are the property of their respective
+        holders.
+
+Includes RSA BSAFE(R) Cryptographic or Security Protocol Software from RSA
+        Security, Inc.
+
+User: yongfu   Host: river   HostID: 7F0100   PID: 100568
+Memory  available: 359.9208 GB  physical: 405.0724 GB
+Linux   : Red Hat Enterprise Linux release 9.7 (Plow)
+CPU Type: Intel(R) Xeon(R) CPU E5-2678 v3 @ 2.50GHz
+All processors running at 2899.7 MHz
+        Socket: Processors (Hyperthreaded Processor)
+        0:       0 ( 24 ),  1 ( 25 ),  2 ( 26 ),  3 ( 27 ),  4 ( 28 )
+                 5 ( 29 ),  6 ( 30 ),  7 ( 31 ),  8 ( 32 ),  9 ( 33 )
+                10 ( 34 ), 11 ( 35 )
+        1:      12 ( 36 ), 13 ( 37 ), 14 ( 38 ), 15 ( 39 ), 16 ( 40 )
+                17 ( 41 ), 18 ( 42 ), 19 ( 43 ), 20 ( 44 ), 21 ( 45 )
+                22 ( 46 ), 23 ( 47 )
+        
+System load averages (1min, 5min, 15min) : 104.8 %, 97.2 %, 65.5 %
+Hyperthreading is enabled
+
+
+Simulating
+        `/home/yongfu/proj/ti-adc-model/outputs/spectre/combined/logs/netlists/ti_static_inl_dnl.scs'
+        on river at 5:38:10 PM, Thur Jun 4, 2026 (process id: 100568).
+Current working directory:
+        /home/yongfu/proj/ti-adc-model/outputs/spectre/combined/logs
+Command line:
+    /eda/cadence/SPECTRE241/tools/bin/spectre -64  \
+        /home/yongfu/proj/ti-adc-model/outputs/spectre/combined/logs/netlists/ti_static_inl_dnl.scs
+        \
+        -format nutascii -raw  \
+       
+        /home/yongfu/proj/ti-adc-model/outputs/spectre/combined/logs/ti_static_inl_dnl.nutascii
+Licensing Information:
+[17:38:10.080289] Configured Lic search path (24.01-s002):
+        /eda/cadence/license.dat
+
+Licensing Information:
+[17:38:10.277019] Periodic Lic check successful
+
+Reading file: 
+        /home/yongfu/proj/ti-adc-model/outputs/spectre/combined/logs/netlists/ti_static_inl_dnl.scs
+Reading file: 
+        /eda/cadence/SPECTRE241/tools.lnx86/spectre/etc/configs/spectre.cfg
+Reading file: 
+        /home/yongfu/proj/ti-adc-model/.venv/src/adc-model/veriloga/configurable_adc.va
+Reading file: 
+        /eda/cadence/SPECTRE241/tools.lnx86/spectre/etc/ahdl/constants.vams
+Reading file: 
+        /eda/cadence/SPECTRE241/tools.lnx86/spectre/etc/ahdl/disciplines.vams
+Reading file:  /home/yongfu/proj/ti-adc-model/veriloga/ti_channel_adc.va
+Time for NDB Parsing: CPU = 275.273 ms, elapsed = 535.234 ms.
+Time accumulated: CPU = 394.798 ms, elapsed = 535.236 ms.
+Peak resident memory used = 192 Mbytes.
+
+Existing shared object for module ti_channel_adc is up to date.
+Installed compiled interface for ti_channel_adc.
+Existing shared object for module configurable_adc is up to date.
+Installed compiled interface for configurable_adc.
+
+Warning from spectre in `ti_channel_adc':`ADC0', during hierarchy flattening.
+    WARNING (SFE-30):
+        "/home/yongfu/proj/ti-adc-model/veriloga/ti_channel_adc.va" 46:
+        Parameter `GAIN_CAL', specified for primitive `configurable_adc', has
+        been ignored because it is an invalid instance parameter. Specify a
+        valid instance parameter and rerun the simulation. Type `spectre -h
+        configurable_adc' to get more information on valid instance
+        parameters.
+    WARNING (SFE-30):
+        "/home/yongfu/proj/ti-adc-model/veriloga/ti_channel_adc.va" 46:
+        Parameter `OFFSET_CAL_V', specified for primitive `configurable_adc',
+        has been ignored because it is an invalid instance parameter. Specify a
+        valid instance parameter and rerun the simulation. Type `spectre -h
+        configurable_adc' to get more information on valid instance
+        parameters.
+    WARNING (SFE-30):
+        "/home/yongfu/proj/ti-adc-model/veriloga/ti_channel_adc.va" 46:
+        Parameter `ENABLE_CAL', specified for primitive `configurable_adc', has
+        been ignored because it is an invalid instance parameter. Specify a
+        valid instance parameter and rerun the simulation. Type `spectre -h
+        configurable_adc' to get more information on valid instance
+        parameters.
+Warning from spectre in `ti_channel_adc':`ADC1', during hierarchy flattening.
+    WARNING (SFE-30):
+        "/home/yongfu/proj/ti-adc-model/veriloga/ti_channel_adc.va" 46:
+        Parameter `GAIN_CAL', specified for primitive `configurable_adc', has
+        been ignored because it is an invalid instance parameter. Specify a
+        valid instance parameter and rerun the simulation. Type `spectre -h
+        configurable_adc' to get more information on valid instance
+        parameters.
+    WARNING (SFE-30):
+        "/home/yongfu/proj/ti-adc-model/veriloga/ti_channel_adc.va" 46:
+        Parameter `OFFSET_CAL_V', specified for primitive `configurable_adc',
+        has been ignored because it is an invalid instance parameter. Specify a
+        valid instance parameter and rerun the simulation. Type `spectre -h
+        configurable_adc' to get more information on valid instance
+        parameters.
+        Further occurrences of this warning will be suppressed.
+
+Time for Elaboration: CPU = 78.047 ms, elapsed = 52.331 ms.
+Time accumulated: CPU = 473.019 ms, elapsed = 587.741 ms.
+Peak resident memory used = 201 Mbytes.
+
+
+Time for EDB Visiting: CPU = 3.271 ms, elapsed = 1.29104 ms.
+Time accumulated: CPU = 476.446 ms, elapsed = 589.185 ms.
+Peak resident memory used = 203 Mbytes.
+
+
+Notice from spectre during topology check.
+    Only one connection to node `clk_mux'.
+
+
+Netlist title:
+        // TI ADC static INL/DNL (interleaved mux at fs).
+
+
+Global user options:
+
+Scoped user options:
+
+Circuit inventory:
+              nodes 12
+   configurable_adc 4     
+ti_channel_adc_behavioral 4     
+            vsource 8     
+
+Analysis and control statement inventory:
+               tran 1     
+
+Output statements:
+             .probe 0     
+           .measure 0     
+               save 1     
+
+
+Notice from spectre.
+    7 warnings suppressed.
+
+Time for parsing: CPU = 28.953 ms, elapsed = 21.0609 ms.
+Time accumulated: CPU = 505.52 ms, elapsed = 610.366 ms.
+Peak resident memory used = 206 Mbytes.
+
+~~~~~~~~~~~~~~~~~~~~~~
+Pre-Simulation Summary
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+
+****************************************************
+Transient Analysis `tran': time = (0 s -> 16.384 us)
+****************************************************
+DC simulation time: CPU = 4.797 ms, elapsed = 2.86603 ms.
+Important parameter values:
+    start = 0 s
+    outputstart = 0 s
+    stop = 16.384 us
+    step = 16.384 ns
+    maxstep = 250 ps
+    ic = all
+    useprevic = no
+    skipdc = no
+    reltol = 1e-03
+    abstol(V) = 1 uV
+    abstol(I) = 1 pA
+    temp = 27 C
+    tnom = 27 C
+    tempeffects = all
+    errpreset = moderate
+    method = traponly
+    lteratio = 3.5
+    relref = sigglobal
+    cmin = 0 F
+    gmin = 1 pS
+
+
+Output and IC/nodeset summary:
+                 save   10      (voltage)
+
+......9......8......7......6......5......4......3......2......1......0
+Number of accepted tran steps =             231177
+
+Maximum value achieved for any signal of each quantity: 
+V: V(vdd) = 1 V
+I: I(VDD:p) = 0 A
+If your circuit contains signals of the same quantity that are vastly different
+        in size (such as high voltage circuitry combined with low voltage
+        control circuitry), you should consider specifying global option
+        `bin_relref=yes'.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Post-Transient Simulation Summary
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   -   To further speed up simulation, consider
+          add ++aps on command line
+   -   Non-default settings that could significantly slow down simulation
+          maxstep = 250 ps, default 327.68 ns
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+During simulation, the CPU load for active processors is :
+         0 (100.0 %)     1 (100.0 %)     2 (100.0 %)     3 (100.0 %)
+         4 (100.0 %)     5 (100.0 %)     6 (100.0 %)     7 (100.0 %)
+         8 (100.0 %)     9 (100.0 %)    10 (100.0 %)    11 (100.0 %)
+        12 (100.0 %)    13 (99.6 %)     14 (100.0 %)    15 (100.0 %)
+        16 (100.0 %)    17 (100.0 %)    18 (100.0 %)    19 (100.0 %)
+        20 (100.0 %)    21 (100.0 %)    22 (100.0 %)    23 (100.0 %)
+        24 (100.0 %)    25 (100.0 %)    26 (100.0 %)    27 (100.0 %)
+        28 (100.0 %)    29 (100.0 %)    30 (100.0 %)    31 (100.0 %)
+        32 (100.0 %)    33 (100.0 %)    34 (100.0 %)    35 (100.0 %)
+        36 (100.0 %)    37 (100.0 %)    38 (100.0 %)    39 (100.0 %)
+        40 (100.0 %)    41 (99.6 %)     42 (100.0 %)    43 (100.0 %)
+        44 (100.0 %)    45 (100.0 %)    46 (100.0 %)    47 (99.8 %)
+        Total: 4799.0%
+Initial condition solution time: CPU = 4.883 ms, elapsed = 2.95115 ms.
+Intrinsic tran analysis time:    CPU = 30.0828 s, elapsed = 24.1145 s.
+Total time required for tran analysis `tran': CPU = 30.0904 s, elapsed =
+        24.1181 s, util. = 125%.
+Time accumulated: CPU = 30.6149 s, elapsed = 24.7475 s.
+Peak resident memory used = 215 Mbytes.
+
+Licensing Information:
+Lic Summary:
+[17:38:35.001288] cdslmd servers: /eda/cadence/license.dat
+[17:38:35.016600] Feature usage summary:
+[17:38:35.249463]   Virtuoso_Spectre  
+
+
+Aggregate audit (5:38:35 PM, Thur Jun 4, 2026):
+Time used: CPU = 30.6 s, elapsed = 30.6 s, util. = 100%.
+Time spent in licensing: elapsed = 367 ms.
+Peak memory used = 215 Mbytes.
+Simulation started at: 5:38:10 PM, Thur Jun 4, 2026, ended at: 5:38:35 PM, Thur
+        Jun 4, 2026, with elapsed time (wall clock): 30.6 s.
+spectre completes with 0 errors, 5 warnings, and 3 notices.

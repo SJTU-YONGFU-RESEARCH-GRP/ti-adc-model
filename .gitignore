@@ -1,0 +1,15 @@
+outputs/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+.venv/
+dist/
+build/
+*.log
+*.psf
+*.raw
+# Cadence Spectre (when run manually from repo root)
+status
+*.ahdlSimDB/

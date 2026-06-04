@@ -1,0 +1,54 @@
+// Per-channel wrapper for time-interleaved TI-ADC arrays (Spectre).
+// Instantiates configurable_adc with per-channel gain / offset / correction.
+
+`include "constants.vams"
+`include "disciplines.vams"
+
+module ti_channel_adc(vin, clk, v_code, vdd, vss);
+
+    input vin, clk, vdd, vss;
+    electrical vin, clk, vdd, vss;
+    output v_code;
+    electrical v_code;
+
+    parameter integer BITS = 10 from [4:16];
+    parameter real VREFP = 1.0;
+    parameter real VREFN = 0.0;
+
+    parameter real GAIN = 1.0;
+    parameter real OFFSET_V = 0.0;
+    parameter real GAIN_CAL = 1.0;
+    parameter real OFFSET_CAL_V = 0.0;
+    parameter integer ENABLE_CAL = 1 from [0:1];
+
+    parameter real SIGMA_THERMAL = 0.0;
+    parameter real JITTER_RMS = 0.0;
+    parameter real NONLINEARITY_A2 = 0.0;
+    parameter real NONLINEARITY_A3 = 0.0;
+    parameter real DNL_SIGMA_LSB = 0.0;
+    parameter integer NOISE_SEED = 1;
+
+    configurable_adc #(
+        .BITS(BITS),
+        .VREFP(VREFP),
+        .VREFN(VREFN),
+        .GAIN(GAIN),
+        .OFFSET_V(OFFSET_V),
+        .GAIN_CAL(GAIN_CAL),
+        .OFFSET_CAL_V(OFFSET_CAL_V),
+        .ENABLE_CAL(ENABLE_CAL),
+        .SIGMA_THERMAL(SIGMA_THERMAL),
+        .JITTER_RMS(JITTER_RMS),
+        .NONLINEARITY_A2(NONLINEARITY_A2),
+        .NONLINEARITY_A3(NONLINEARITY_A3),
+        .DNL_SIGMA_LSB(DNL_SIGMA_LSB),
+        .NOISE_SEED(NOISE_SEED)
+    ) u_adc (
+        .vin(vin),
+        .clk(clk),
+        .v_code(v_code),
+        .vdd(vdd),
+        .vss(vss)
+    );
+
+endmodule

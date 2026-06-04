@@ -1,0 +1,11 @@
+* TI ADC static INL/DNL reference netlist (ngspice).
+*
+* Rendered parameterized netlists are written to
+*   <output-dir>/logs/netlists/ti_static_inl_dnl.cir
+* when using:
+*
+*   python scripts/run_ti_static.py --ngspice --output-dir outputs/ngspice/ideal
+*
+* Python mux post-process applies mismatch-aware quantization on the muxed stream.
+
+* See src/ti_adc/ngspice_engine.py::render_ti_static_netlist

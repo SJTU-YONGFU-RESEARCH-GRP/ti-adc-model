@@ -1,0 +1,2 @@
+Max |DNL| : 15.6597 LSB
+Max |INL| : 8.8121 LSB

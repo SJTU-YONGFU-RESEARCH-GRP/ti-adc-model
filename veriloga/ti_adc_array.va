@@ -1,0 +1,12 @@
+// Time-interleaved ADC array (M = 4 channels).
+//
+// Structural interleaving is implemented in Spectre netlists
+// (testbench/spectre/ti_*.scs): one ti_channel_adc per channel with
+// phase-shifted clocks (period M/fs, delay k/fs + timing_skew_k).
+// Python post-process muxes v_code0..3 onto the fs stream (see ti_adc.ti_io).
+
+`include "constants.vams"
+`include "disciplines.vams"
+
+// Reference cell: instantiate four ``ti_channel_adc`` instances in the Spectre
+// testbench with per-channel parameters ``gain_k``, ``offset_v_k``, ``clk_k``.

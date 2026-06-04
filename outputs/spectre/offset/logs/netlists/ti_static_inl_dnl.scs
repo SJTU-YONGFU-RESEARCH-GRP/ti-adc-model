@@ -1,0 +1,69 @@
+// TI ADC static INL/DNL (interleaved mux at fs).
+//
+//   python scripts/run_ti_static.py --spectre --output-dir outputs/spectre/ideal
+
+simulator lang=spectre
+
+ahdl_include "/home/yongfu/proj/ti-adc-model/.venv/src/adc-model/veriloga/configurable_adc.va"
+ahdl_include "/home/yongfu/proj/ti-adc-model/veriloga/ti_channel_adc.va"
+parameters bits=10
+parameters vrefp=1
+parameters vrefn=0.0
+parameters enable_cal=0
+parameters fs=1000000000
+parameters num_channels=4
+parameters samples_per_code=16
+
+parameters gain_0=1
+parameters gain_1=1
+parameters gain_2=1
+parameters gain_3=1
+parameters offset_v_0=-0.01
+parameters offset_v_1=-0.00333333333333
+parameters offset_v_2=0.00333333333333
+parameters offset_v_3=0.01
+parameters gain_cal_0=1
+parameters gain_cal_1=1
+parameters gain_cal_2=1
+parameters gain_cal_3=1
+parameters offset_cal_0=0.0
+parameters offset_cal_1=0.0
+parameters offset_cal_2=0.0
+parameters offset_cal_3=0.0
+parameters timing_skew_0=0.0
+parameters timing_skew_1=0.0
+parameters timing_skew_2=0.0
+parameters timing_skew_3=0.0
+
+parameters sigma_thermal=0.00025
+parameters jitter_rms=5e-13
+parameters nonlinearity_a2=0.0
+parameters nonlinearity_a3=-0.002
+parameters dnl_sigma_lsb=0.08
+parameters noise_seed=1
+
+parameters num_codes=(2**bits)-1
+parameters num_samples=16384
+parameters t_stop=num_samples/fs
+parameters lsb=(vrefp-vrefn)/num_codes
+parameters ramp_start=vrefn+0.5*lsb
+parameters ramp_end=vrefp-0.5*lsb
+
+VDD (vdd 0) vsource dc=1.0
+VSS (vss 0) vsource dc=0.0
+
+VRAMP (vin 0) vsource type=pwl \
+    wave=[0 ramp_start t_stop ramp_end]
+
+VCLK0 (clk0 0) vsource type=pulse val0=0 val1=1 period=4e-09 delay=0.0 rise=100p fall=100p width=2e-09
+ADC0 (vin clk0 v_code0 vdd vss) ti_channel_adc BITS=10 VREFP=1.0 VREFN=0.0 GAIN=1.0 OFFSET_V=-0.01 GAIN_CAL=1.0 OFFSET_CAL_V=0.0 ENABLE_CAL=0 SIGMA_THERMAL=0.00025 JITTER_RMS=5e-13 NONLINEARITY_A2=0.0 NONLINEARITY_A3=-0.002 DNL_SIGMA_LSB=0.08 NOISE_SEED=1
+VCLK1 (clk1 0) vsource type=pulse val0=0 val1=1 period=4e-09 delay=1e-09 rise=100p fall=100p width=2e-09
+ADC1 (vin clk1 v_code1 vdd vss) ti_channel_adc BITS=10 VREFP=1.0 VREFN=0.0 GAIN=1.0 OFFSET_V=-0.0033333333333333335 GAIN_CAL=1.0 OFFSET_CAL_V=0.0 ENABLE_CAL=0 SIGMA_THERMAL=0.00025 JITTER_RMS=5e-13 NONLINEARITY_A2=0.0 NONLINEARITY_A3=-0.002 DNL_SIGMA_LSB=0.08 NOISE_SEED=2
+VCLK2 (clk2 0) vsource type=pulse val0=0 val1=1 period=4e-09 delay=2e-09 rise=100p fall=100p width=2e-09
+ADC2 (vin clk2 v_code2 vdd vss) ti_channel_adc BITS=10 VREFP=1.0 VREFN=0.0 GAIN=1.0 OFFSET_V=0.0033333333333333335 GAIN_CAL=1.0 OFFSET_CAL_V=0.0 ENABLE_CAL=0 SIGMA_THERMAL=0.00025 JITTER_RMS=5e-13 NONLINEARITY_A2=0.0 NONLINEARITY_A3=-0.002 DNL_SIGMA_LSB=0.08 NOISE_SEED=3
+VCLK3 (clk3 0) vsource type=pulse val0=0 val1=1 period=4e-09 delay=3e-09 rise=100p fall=100p width=2e-09
+ADC3 (vin clk3 v_code3 vdd vss) ti_channel_adc BITS=10 VREFP=1.0 VREFN=0.0 GAIN=1.0 OFFSET_V=0.01 GAIN_CAL=1.0 OFFSET_CAL_V=0.0 ENABLE_CAL=0 SIGMA_THERMAL=0.00025 JITTER_RMS=5e-13 NONLINEARITY_A2=0.0 NONLINEARITY_A3=-0.002 DNL_SIGMA_LSB=0.08 NOISE_SEED=4
+VCLK_MUX (clk_mux 0) vsource type=pulse val0=0 val1=1 period=1e-09 rise=100p fall=100p width=5e-10
+
+save vin clk_mux clk0 clk1 clk2 clk3 v_code0 v_code1 v_code2 v_code3
+tran tran stop=t_stop maxstep=0.25/fs

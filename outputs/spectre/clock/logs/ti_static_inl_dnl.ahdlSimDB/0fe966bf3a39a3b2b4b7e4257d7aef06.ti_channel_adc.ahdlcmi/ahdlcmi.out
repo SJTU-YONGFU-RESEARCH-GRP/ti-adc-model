@@ -1,0 +1,46 @@
+ahdlcmicompile: Compiling ahdlcmi in ./ti_static_inl_dnl.ahdlSimDB//0fe966bf3a39a3b2b4b7e4257d7aef06.ti_channel_adc.ahdlcmi/Linux-64/ for Linux-64 with optimize using gcc on Thu Jun  4 16:41:48 CST 2026 [5.0]
+ahdlcmicompile: Generating makefile
+PATH:  /eda/cadence/SPECTRE241/bin:/eda/cadence/SPECTRE241/tools/bin/64bit:/eda/cadence/SPECTRE241/tools/bin:/home/yongfu/proj/ti-adc-model/.venv/bin:/eda/cadence/PVS241/tools/bin:/eda/cadence/SPECTRE241/tools/spectre/bin:/eda/cadence/IC231/tools/bin:/eda/cadence/IC231/tools/dfII/bin:/eda/calibre2020/aoj_cal_2020.4_34.17/bin:/home/yongfu/.local/bin:/home/yongfu/bin:/usr/local/balsa/bin:/usr/share/Modules/bin:/usr/local/cuda/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/bin
+LD_LIBRARY_PATH:  /eda/cadence/SPECTRE241/tools/TPtools/libstdc++6/lib/64bit:/eda/cadence/SPECTRE241/tools/TPtools/cuda/lib64:/eda/cadence/SPECTRE241/tools/giganta/lib/64bit:/eda/cadence/SPECTRE241/tools/mdl/lib/64bit:/eda/cadence/SPECTRE241/tools/mmsim/lib/64bit:/eda/cadence/SPECTRE241/tools/hdf/lib/64bit:/eda/cadence/SPECTRE241/tools/python/64bit/lib:/eda/cadence/SPECTRE241/tools/inca/lib/64bit:/eda/cadence/SPECTRE241/tools/awrmwo/lib/64bit:/eda/cadence/SPECTRE241/tools/spectre/lib/64bit:/eda/cadence/SPECTRE241/tools/dfII/lib/64bit:/eda/cadence/SPECTRE241/tools/TPtools/libstdc++/lib64:/eda/cadence/SPECTRE241/tools/TPtools/zlib/lib64:/eda/cadence/SPECTRE241/tools/TPtools/abseil/lib64:/eda/cadence/SPECTRE241/tools/TPtools/grpc/lib64:/eda/cadence/SPECTRE241/tools/TPtools/protobuf/lib64:/eda/cadence/SPECTRE241/tools/TPtools/libffi/lib64:/eda/cadence/SPECTRE241/tools/fmc/lib/64bit:/eda/cadence/SPECTRE241/tools/lib/64bit:/eda/cadence/SPECTRE241/tools/lib/64bit:/eda/cadence/SPECTRE241/tools/lib:/eda/cadence/SPECTRE241/tools/lib/64bit/RHEL/RHEL9:/usr/local/balsa/lib:/usr/local/lib
+/eda/cadence/SPECTRE241/tools.lnx86/spectre/ahdlcmi/bin/gnumake -j1 -f GNUmakefile
+Cleaning ./obj/optimize/5.0
+rm -f -rf ./obj/optimize/5.0
+Compiling C file ti_channel_adc.c (optimize)
+/eda/cadence/SPECTRE241/tools.lnx86/spectre/ahdlcmi/bin/64bit/ahdlcc 0 /eda/cadence/SPECTRE241/tools.lnx86/cdsgcc/gcc/12.3/bin/gcc  -ffast-math  -fno-unsafe-math-optimizations -Wno-error=int-conversion -O3 -m64 -DSYSV -DSVR4 -D_REENTRANT -fPIC   -DconfigSPECTRE -I. -I/eda/cadence/SPECTRE241/tools.lnx86/spectre/ahdlcmi/include -c ti_channel_adc.c -o obj/optimize/5.0/ti_channel_adc.o || rm -f -f obj/optimize/5.0/ti_channel_adc.o
+<stdin>: In function 'ti_channel_adc_pGetInstanceParams':
+<stdin>:1593:41: warning: implicit declaration of function 'devGetInstKnotStatus'; did you mean 'devGetInstState'? [-Wimplicit-function-declaration]
+<stdin>: In function 'ti_channel_adc_pDC_Load':
+<stdin>:1877:41: warning: passing argument 1 of 'aslDevFillZeorDiagonalElemet' makes pointer from integer without a cast [-Wint-conversion]
+In file included from <stdin>:24:
+/eda/cadence/SPECTRE241/tools.lnx86/spectre/ahdlcmi/include/ahdlDevLibGlobal.h:2884:63: note: expected 'void *' but argument is of type 'long int'
+ 2884 | ASL_FUNC_DECL_START extern void aslDevFillZeorDiagonalElemet( void *, int, unsigned int, struct ahdlFuncModeParam * );
+      |                                                               ^~~~~~
+<stdin>: In function 'ti_channel_adc_pCompare':
+<stdin>:2291:36: warning: assignment to 'long int' from 'long int *' makes integer from pointer without a cast [-Wint-conversion]
+<stdin>:2292:23: warning: passing argument 1 of 'memcpy' makes pointer from integer without a cast [-Wint-conversion]
+In file included from /eda/cadence/SPECTRE241/tools.lnx86/spectre/ahdlcmi/include/ahdlPiCmi.h:5,
+                 from /eda/cadence/SPECTRE241/tools.lnx86/spectre/ahdlcmi/include/ahdlDevLibGlobal.h:80:
+/usr/include/string.h:43:39: note: expected 'void * restrict' but argument is of type 'long int'
+   43 | extern void *memcpy (void *__restrict __dest, const void *__restrict __src,
+      |                      ~~~~~~~~~~~~~~~~~^~~~~~
+<stdin>:2292:57: warning: passing argument 2 of 'memcpy' makes pointer from integer without a cast [-Wint-conversion]
+/usr/include/string.h:43:70: note: expected 'const void * restrict' but argument is of type 'long int'
+   43 | extern void *memcpy (void *__restrict __dest, const void *__restrict __src,
+      |                                               ~~~~~~~~~~~~~~~~~~~~~~~^~~~~
+<stdin>:2294:36: warning: assignment to 'long int' from 'void *' makes integer from pointer without a cast [-Wint-conversion]
+<stdin>: In function 'ti_channel_adc_pGetMatrixPointers':
+<stdin>:2450:33: warning: assignment to 'long int' from 'void *' makes integer from pointer without a cast [-Wint-conversion]
+<stdin>: In function 'ti_channel_adc_pAnalTranLoad':
+<stdin>:3122:42: warning: passing argument 1 of 'aslDevFillZeorDiagonalElemet' makes pointer from integer without a cast [-Wint-conversion]
+/eda/cadence/SPECTRE241/tools.lnx86/spectre/ahdlcmi/include/ahdlDevLibGlobal.h:2884:63: note: expected 'void *' but argument is of type 'long int'
+ 2884 | ASL_FUNC_DECL_START extern void aslDevFillZeorDiagonalElemet( void *, int, unsigned int, struct ahdlFuncModeParam * );
+      |                                                               ^~~~~~
+<stdin>: In function 'ahdlti_channel_adcDescInstall':
+<stdin>:3454:2: warning: implicit declaration of function 'descSetDeviceType'; did you mean 'descSetDelete'? [-Wimplicit-function-declaration]
+<stdin>:3456:2: warning: implicit declaration of function 'descSetSetContrInfoPtr' [-Wimplicit-function-declaration]
+<stdin>:3463:2: warning: implicit declaration of function 'descSetCopySignals'; did you mean 'descSetMapSignals'? [-Wimplicit-function-declaration]
+<stdin>:3487:2: warning: implicit declaration of function 'descSetVATermInfo'; did you mean 'descSetGetInfo'? [-Wimplicit-function-declaration]
+<stdin>:3488:2: warning: implicit declaration of function 'descSetGetNodeNamesForBranch' [-Wimplicit-function-declaration]
+rm -f -rf ti_channel_adc.c
+/eda/cadence/SPECTRE241/tools.lnx86/cdsgcc/gcc/12.3/bin/gcc -shared -O3 -m64 -fPIC -o obj/optimize/5.0/libahdlcmi_ti_channel_adc.so ./obj/optimize/5.0/ti_channel_adc.o  -Wl,-rpath,/usr/lib -Wl,-rpath,/lib -lm -s 
+rm -f -f ./obj/optimize/5.0/ti_channel_adc.o 

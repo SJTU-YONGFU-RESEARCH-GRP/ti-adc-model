@@ -1,0 +1,59 @@
+// TI ADC dynamic spectrum (M interleaved channels, Python mux post-process).
+//
+//   python scripts/run_ti_dynamic.py --spectre --output-dir outputs/spectre/ideal
+
+simulator lang=spectre
+
+include "./testbench/spectre/ti_adc_include.scs"
+
+parameters bits=10
+parameters vrefp=1.0
+parameters vrefn=0.0
+parameters enable_cal=0
+parameters fs=1G
+parameters num_channels=4
+parameters num_samples=8192
+parameters coherent_bin=997
+parameters fin=coherent_bin*fs/num_samples
+parameters amplitude=0.95*(vrefp-vrefn)/2
+parameters vcm=0.5*(vrefp+vrefn)
+parameters t_stop=num_samples/fs
+
+parameters gain_0=1.0
+parameters gain_1=1.0
+parameters gain_2=1.0
+parameters gain_3=1.0
+parameters offset_v_0=0.0
+parameters offset_v_1=0.0
+parameters offset_v_2=0.0
+parameters offset_v_3=0.0
+parameters gain_cal_0=1.0
+parameters gain_cal_1=1.0
+parameters gain_cal_2=1.0
+parameters gain_cal_3=1.0
+parameters offset_cal_0=0.0
+parameters offset_cal_1=0.0
+parameters offset_cal_2=0.0
+parameters offset_cal_3=0.0
+parameters timing_skew_0=0.0
+parameters timing_skew_1=0.0
+parameters timing_skew_2=0.0
+parameters timing_skew_3=0.0
+
+parameters sigma_thermal=250u
+parameters jitter_rms=500f
+parameters nonlinearity_a2=0.0
+parameters nonlinearity_a3=-0.002
+parameters dnl_sigma_lsb=0.08
+parameters noise_seed=1
+
+VDD (vdd 0) vsource dc=1.0
+VSS (vss 0) vsource dc=0.0
+
+VSIN (vin 0) vsource type=sine \
+    dc=vcm ampl=amplitude freq=fin
+
+// TI_CHANNEL_INSTANCES
+
+// TI_SAVE
+tran tran stop=t_stop maxstep=0.25/fs

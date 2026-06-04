@@ -1,0 +1,5 @@
+// Shared Verilog-A includes for TI ADC Spectre testbenches.
+// Paths are rewritten to absolute locations by ti_adc.spectre_engine.
+
+ahdl_include "./veriloga/configurable_adc.va"
+ahdl_include "./veriloga/ti_channel_adc.va"

@@ -1,0 +1,51 @@
+# TI ngspice simulation log: ti_dynamic_spectrum.cir
+Generated: 2026-06-04 09:12:56 UTC
+Engine: ngspice behavioral TI array (reference: ti_channel_adc.va)
+Repo root: /home/yongfu/proj/ti-adc-model
+Netlist: /home/yongfu/proj/ti-adc-model/outputs/ngspice/offset/logs/netlists/ti_dynamic_spectrum.cir
+Command: ngspice -b /home/yongfu/proj/ti-adc-model/outputs/ngspice/offset/logs/netlists/ti_dynamic_spectrum.cir
+
+Note: No compatibility mode selected!
+
+
+Circuit: * ti dynamic spectrum testbench (ngspice behavioral, python mux post-process)
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using SPARSE 1.3 as Direct Linear Solver
+
+Initial Transient Solution
+--------------------------
+
+Node                                   Voltage
+----                                   -------
+vin                                        0.5
+clk0                                         0
+v_gain0                                   0.49
+v_nl0                                     0.49
+clk1                                         0
+v_gain1                               0.496667
+v_nl1                                 0.496667
+clk2                                         0
+v_gain2                               0.503333
+v_nl2                                 0.503333
+clk3                                         0
+v_gain3                                   0.51
+v_nl3                                     0.51
+bnonlin3#branch                              0
+bgain3#branch                                0
+bnonlin2#branch                              0
+bgain2#branch                                0
+bnonlin1#branch                              0
+bgain1#branch                                0
+bnonlin0#branch                              0
+bgain0#branch                                0
+vclk3#branch                                 0
+vclk2#branch                                 0
+vclk1#branch                                 0
+vclk0#branch                                 0
+vin#branch                                   0
+
+ Reference value :  5.80149e-07 Reference value :  1.19678e-06 Reference value :  1.79710e-06 Reference value :  2.34520e-06 Reference value :  2.89006e-06 Reference value :  3.41920e-06 Reference value :  3.92920e-06 Reference value :  4.42606e-06 Reference value :  4.90822e-06 Reference value :  5.37821e-06 Reference value :  5.83724e-06 Reference value :  6.29303e-06 Reference value :  6.73412e-06 Reference value :  7.16510e-06 Reference value :  7.57910e-06 Reference value :  7.98624e-06
+No. of Data Rows : 131069
+Note: Simulation executed from .control section 
