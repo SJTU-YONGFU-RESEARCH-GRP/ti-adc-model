@@ -1,0 +1,3 @@
+[submodule "model/adc-model"]
+	path = model/adc-model
+	url = git@github.com:SJTU-YONGFU-RESEARCH-GRP/adc-model.git
